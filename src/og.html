@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+  Social preview card (assets/og.png), 1200 × 630.
+  Regenerate after changing it:
+    npx playwright screenshot --viewport-size=1200,630 src/og.html assets/og.png
+-->
+<html lang="en">
+<meta charset="utf-8">
+<title>Social preview card</title>
+<style>
+  @font-face { font-family: "Bricolage Display"; src: url("../assets/fonts/bricolage-display.woff2") format("woff2"); font-weight: 400 800; }
+  @font-face { font-family: "Bricolage Text"; src: url("../assets/fonts/bricolage-text.woff2") format("woff2"); font-weight: 300 700; }
+  @font-face { font-family: "JetBrains Mono"; src: url("../assets/fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 400 700; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { position: relative; background: #f2f0ea; color: #14130f; font-family: "Bricolage Text", sans-serif; -webkit-font-smoothing: antialiased; }
+  .pad { position: absolute; inset: 0; padding: 52px 64px; display: flex; flex-direction: column; }
+  .row { display: flex; align-items: center; justify-content: space-between; font: 500 19px/1 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: #5d594f; }
+  .row span { display: flex; align-items: center; gap: 16px; }
+  .seal { width: 44px; height: 44px; }
+  h1 { margin: 34px 0 0 -4px; font: 700 189px/.86 "Bricolage Display", sans-serif; letter-spacing: -.005em; white-space: nowrap; }
+  p { margin-top: 24px; font: 500 50px/1 "Bricolage Display", sans-serif; letter-spacing: -.012em; }
+  .wave { position: absolute; left: 0; right: 0; bottom: 84px; width: 1200px; height: 150px; }
+  .wave path { fill: none; stroke: #f0441e; stroke-width: 3; stroke-linejoin: round; }
+  .foot { position: absolute; left: 64px; right: 64px; bottom: 44px; padding-top: 18px; border-top: 1px solid rgb(20 19 15 / .2); }
+</style>
+<div class="pad">
+  <div class="row">
+    <span><svg class="seal" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#f0441e"/><path id="mark" transform="translate(6 9)" fill="none" stroke="#fff6ee" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Full-Stack Engineer</span>
+    <span>Tokyo, Japan</span>
+  </div>
+  <h1>Sugianto Wong</h1>
+  <p>I take products from spec to production.</p>
+</div>
+<svg class="wave" viewBox="0 0 1200 150" aria-hidden="true"><path id="wave"/></svg>
+<div class="row foot"><span>Web · Games · Mobile · Audio · AI</span><span>fernsugi.github.io</span></div>
+<script>
+  // Same curve as the site's hero: y = sin(θ + index · sin(ratio · θ)).
+  const fm = ({ ratio, index, cycles, w, h, pad, steps }) => {
+    let d = '';
+    for (let i = 0; i <= steps; i++) {
+      const th = 2 * Math.PI * cycles * (i / steps);
+      const y = h / 2 - (h / 2 - pad) * Math.sin(th + index * Math.sin(ratio * th));
+      d += `${i ? 'L' : 'M'}${((i / steps) * w).toFixed(1)} ${y.toFixed(1)}`;
+    }
+    return d;
+  };
+  document.getElementById('wave').setAttribute('d', fm({ ratio: 2, index: 1.8, cycles: 4, w: 1200, h: 150, pad: 6, steps: 1200 }));
+  document.getElementById('mark').setAttribute('d', fm({ ratio: 2, index: 1.15, cycles: 1.5, w: 20, h: 14, pad: 1, steps: 48 }));
+</script>
+</html>
